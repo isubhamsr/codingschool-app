@@ -11,5 +11,5 @@ import { BlogPost } from '../../../../models/BlogPost';
   styleUrl: './blogs.component.css',
 })
 export class BlogsComponent {
-  @Input() posts: any;
+  @Input() posts: any = 'loading....';
 }

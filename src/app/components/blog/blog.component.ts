@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { BlogsComponent } from './blogs/blogs.component';
 import { BlogpostService } from '../../services/blogpost.service';
 import { BlogPost } from '../../../models/BlogPost';
@@ -18,11 +18,18 @@ export class BlogComponent implements OnInit {
   }
 
   posts: any;
+  isLoading = signal(false);
 
   fetchPosts() {
+    this.isLoading.update((pre) => {
+      return !pre;
+    });
     this.blogpostService.fetchAllBlogs().subscribe({
       next: (data: any) => {
         this.posts = data.data;
+        this.isLoading.update((pre) => {
+          return !pre;
+        });
       },
       error: (error) => {
         console.log(error);
